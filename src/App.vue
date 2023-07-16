@@ -12,15 +12,5 @@ export default {
 
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    /* font-size: 100%;
-    vertical-align: baseline; */
-}
+
 </style>
