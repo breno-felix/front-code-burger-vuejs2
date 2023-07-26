@@ -1,4 +1,4 @@
-const Login = () => import('@/views/Login.vue');
+const Login = () => import('@/views/Login/Login.vue');
 
 const authRoutes = [
   {
