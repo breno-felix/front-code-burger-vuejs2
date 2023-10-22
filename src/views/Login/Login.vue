@@ -26,15 +26,16 @@
 
             <b-col cols="10" class="mb-4">
               <b-form-group label="Senha:" label-for="password">
-                <b-form-input id="password" v-model="password" type="password" placeholder="********" required></b-form-input>
+                <b-form-input id="password" v-model="password" type="password" placeholder="********"
+                  required></b-form-input>
               </b-form-group>
             </b-col>
 
             <b-col cols="10" class="mt-5">
               <div class="col-4 mb-2">
-                <b-button class="submit-button w-100" pill type="submit">Acessar →</b-button>
+                <DefaultButton :buttonText="'Acessar →'"></DefaultButton>
               </div>
-              <div >
+              <div>
                 <p class="sign-up">Não possui conta? <a href="#">Cadastre-se</a></p>
               </div>
             </b-col>
@@ -46,22 +47,28 @@
 </template>
 
 <script>
+import DefaultButton from '@/components/DefaultButton.vue'
+
 export default {
+  name: 'Login',
+  components: {
+    DefaultButton
+  },
   data() {
-        return {
-            email: '',
-            password: ''
-        }
-    },
-    methods: {
-        onSubmit() {
-            const credentials = {
-                email: this.email,
-                password: this.password
-            }
-           console.log(credentials)
-        }
+    return {
+      email: '',
+      password: ''
     }
+  },
+  methods: {
+    onSubmit() {
+      const credentials = {
+        email: this.email,
+        password: this.password
+      }
+      console.log(credentials)
+    }
+  }
 }
 </script>
 
@@ -81,12 +88,6 @@ export default {
   background: #373737;
   border-radius: 0 10px 10px 0;
   color: white;
-}
-
-.submit-button {
-  background-color: #9758A6;
-  border: none;
-  min-width: 120px;
 }
 
 a {
