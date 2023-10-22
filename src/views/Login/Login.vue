@@ -16,18 +16,25 @@
           </b-col>
         </b-row>
 
-        <b-form @submit.prevent="onSubmit">
+        <b-form novalidate @submit.prevent="onSubmit">
           <b-row align-h="center">
             <b-col cols="10" class="mb-4">
               <b-form-group label="Email:" label-for="email">
-                <b-form-input id="email" v-model="email" type="email" placeholder="user@mail.com" required></b-form-input>
+                <b-form-input id="email" v-model.trim="$v.email.$model" :state="!($v.email.$error)" type="email"
+                  placeholder="user@mail.com" required></b-form-input>
+                <b-form-invalid-feedback :state="!($v.email.$error)">
+                  Um email válido é necessário.
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
 
             <b-col cols="10" class="mb-4">
               <b-form-group label="Senha:" label-for="password">
-                <b-form-input id="password" v-model="password" type="password" placeholder="********"
-                  required></b-form-input>
+                <b-form-input id="password" v-model.trim="$v.password.$model" :state="!($v.password.$error)" type="password"
+                  placeholder="********" required></b-form-input>
+                <b-form-invalid-feedback :state="!($v.password.$error)">
+                  A senha é obrigatória.
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
 
@@ -48,6 +55,7 @@
 
 <script>
 import DefaultButton from '@/components/DefaultButton.vue'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Login',
@@ -60,8 +68,21 @@ export default {
       password: ''
     }
   },
+  validations: {
+    email: {
+      required,
+      email
+    },
+    password: {
+      required
+    }
+  },
   methods: {
     onSubmit() {
+      this.$v.$touch()
+      
+      if (this.$v.$invalid) return;
+      
       const credentials = {
         email: this.email,
         password: this.password
