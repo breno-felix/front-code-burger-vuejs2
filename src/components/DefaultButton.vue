@@ -1,8 +1,11 @@
 <template>
     <div>
-        <b-button class="submit-button w-100" pill type="submit" :style="buttonStyle">
-            {{ buttonText }}
-        </b-button>
+        <b-overlay :show="loading" rounded="pill" opacity="0.6" spinner-small spinner-variant="primary"
+            class="d-inline-block" @hidden="onHidden">
+            <b-button class="submit-button w-100" pill type="submit" :style="buttonStyle">
+                {{ buttonText }}
+            </b-button>
+        </b-overlay>
     </div>
 </template>
   
@@ -21,6 +24,10 @@ export default {
         buttonText: {
             type: String,
         },
+        loading: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         buttonStyle() {
@@ -31,6 +38,11 @@ export default {
             };
         }
     },
+    methods: {
+        onHidden() {
+            this.$refs.button.focus()
+        },
+    }
 };
 </script>
   
