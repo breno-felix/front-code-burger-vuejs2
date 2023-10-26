@@ -2,7 +2,7 @@
     <div>
         <b-overlay :show="loading" rounded="pill" opacity="0.6" spinner-small spinner-variant="primary"
             class="d-inline-block" @hidden="onHidden">
-            <b-button class="submit-button w-100" pill type="submit" :style="buttonStyle">
+            <b-button ref="button" :disabled="loading" class="submit-button w-100" pill type="submit" :style="buttonStyle">
                 {{ buttonText }}
             </b-button>
         </b-overlay>
@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         onHidden() {
-            this.$refs.button.focus()
+            this.$refs.button.focus();
         },
     }
 };
