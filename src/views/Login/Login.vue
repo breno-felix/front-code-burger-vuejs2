@@ -30,20 +30,20 @@
 
             <b-col cols="10" class="mb-4">
               <b-form-group label="Senha:" label-for="password">
-                <b-form-input id="password" v-model.trim="$v.password.$model" :state="!($v.password.$error)" type="password"
-                  placeholder="********" required></b-form-input>
+                <b-form-input id="password" v-model.trim="$v.password.$model" :state="!($v.password.$error)" type="password" 
+                placeholder="********" required></b-form-input>
                 <b-form-invalid-feedback :state="!($v.password.$error)">
                   A senha é obrigatória.
                 </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
 
-            <b-col cols="10" class="mt-5">
-              <div class="col-4 mb-2">
-                <DefaultButton :buttonText="'Acessar →'"></DefaultButton>
+            <b-col cols="10" class="mt-5" >
+              <div class="mb-2 p-0">
+                <DefaultButton :buttonText="'Acessar →'" :loading="loading"></DefaultButton>
               </div>
               <div>
-                <p class="sign-up">Não possui conta? <a href="#">Cadastre-se</a></p>
+                <p>Não possui conta? <a href="#">Cadastre-se</a></p>
               </div>
             </b-col>
           </b-row>
@@ -56,16 +56,19 @@
 <script>
 import DefaultButton from '@/components/DefaultButton.vue'
 import { required, email } from 'vuelidate/lib/validators'
+import ToastMixin  from '@/mixins/toastMixin.js';
 
 export default {
   name: 'Login',
+  mixins: [ToastMixin],
   components: {
     DefaultButton
   },
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      loading: false
     }
   },
   validations: {
@@ -80,15 +83,23 @@ export default {
   methods: {
     onSubmit() {
       this.$v.$touch()
-      
+
       if (this.$v.$invalid) return;
-      
+
       const credentials = {
         email: this.email,
         password: this.password
       }
-      console.log(credentials)
-    }
+      this.loading = true
+      this.$store.dispatch('login', credentials)
+        .then(() => {
+          this.$router.push('/')
+        }).catch(error => {
+          this.makeToast(error, 'Mensagem de Erro!', 'warning')
+        }).finally(() => {
+          this.loading = false
+        })
+    },
   }
 }
 </script>
