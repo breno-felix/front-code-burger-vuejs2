@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { login } from "@/services/api-code-burger";
+import Vue from "vue";
 
 export default {
   state: {
@@ -38,30 +39,75 @@ export default {
             const token = response.data.accessToken;
             localStorage.setItem("token", token);
 
-            const { userId } = jwt.decode(token);
+            const { id } = jwt.decode(token);
 
-            commit("SET_USER_ID", userId);
+            commit("SET_USER_ID", id);
             commit("SET_IS_AUTHENTICATED", true);
-
+            Vue.$log.info({
+              timestamp: new Date(),
+              message: "Usuário logado.",
+              data: {
+                method: "login",
+                userId: id,
+                status: 200,
+              },
+            });
             resolve(response);
           })
           .catch((error) => {
             commit("CLEAR_STATE");
             if (error.response) {
               const errorCode = error.response.status;
+              const errorText = error.response.data.error;
 
               switch (errorCode) {
                 case 400:
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Usuário ou senha inválidos.",
+                    data: {
+                      method: "login",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
                   reject("Usuário ou senha inválidos.");
                   break;
                 case 401:
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Usuário ou senha inválidos.",
+                    data: {
+                      method: "login",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
                   reject("Usuário ou senha inválidos.");
                   break;
                 case 500:
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Ocorreu um erro no servidor.",
+                    data: {
+                      method: "login",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
                   reject("Ocorreu um erro no servidor.");
                   break;
                 default:
-                  reject("Ocorreu um erro inesperado. Tente novamente. ");
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Ocorreu um erro inesperado. Tente novamente.",
+                    data: {
+                      method: "login",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
+                  reject("Ocorreu um erro inesperado. Tente novamente.");
                   break;
               }
             }
@@ -69,6 +115,15 @@ export default {
       });
     },
     logout({ commit }) {
+      Vue.$log.info({
+        timestamp: new Date(),
+        message: "Usuário deslogado.",
+        data: {
+          method: "logout",
+          userId: commit.state.userId,
+          status: 200,
+        },
+      });
       commit("CLEAR_STATE");
     },
   },
