@@ -124,8 +124,11 @@ export default {
       }
       this.loading = true
       this.$store.dispatch('registration', credentials)
-        .then(() => {
-          this.$router.push('/login')
+        .then((message) => {
+          this.makeToast(message, 'Tudo certo!', 'success');
+          setTimeout(() => {
+            this.$router.push('/login');
+          }, 4000)
         }).catch(error => {
           this.makeToast(error, 'Mensagem de Erro!', 'warning')
         }).finally(() => {
