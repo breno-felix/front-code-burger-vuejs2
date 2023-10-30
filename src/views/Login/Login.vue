@@ -38,7 +38,7 @@
               </b-form-group>
             </b-col>
 
-            <b-col cols="10" class="mt-5" >
+            <b-col cols="10" class="mt-2" >
               <div class="mb-2 p-0">
                 <DefaultButton :buttonText="'Acessar →'" :loading="loading"></DefaultButton>
               </div>
