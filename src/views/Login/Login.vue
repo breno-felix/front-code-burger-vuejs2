@@ -43,7 +43,7 @@
                 <DefaultButton :buttonText="'Acessar →'" :loading="loading"></DefaultButton>
               </div>
               <div>
-                <p>Não possui conta? <a href="#">Cadastre-se</a></p>
+                <p>Não possui conta? <a href="/registration">Cadastre-se</a></p>
               </div>
             </b-col>
           </b-row>
