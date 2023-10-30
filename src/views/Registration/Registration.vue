@@ -63,7 +63,7 @@
                 <DefaultButton :buttonText="'Cadastrar'" :loading="loading"></DefaultButton>
               </div>
               <div>
-                <p>Já possui conta? <a href="#">Login</a></p>
+                <p>Já possui conta? <a href="/login">Login</a></p>
               </div>
             </b-col>
           </b-row>
