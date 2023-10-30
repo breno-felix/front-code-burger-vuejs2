@@ -13,3 +13,13 @@ export const login = async ({email, password}) => {
   }
   return await api.post('login', body);
 };
+
+export const registration = async ({name, email, password, repeatPassword}) => {
+  const body = {
+    name,
+    email,
+    password,
+    repeatPassword
+  }
+  return await api.post('sign-up', body);
+};
