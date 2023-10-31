@@ -81,6 +81,17 @@ export default {
                   commit("SET_MESSAGE", "Ocorreu um erro inesperado. Tente novamente.");
                   break;
               }
+            } else {
+              Vue.$log.error({
+                timestamp: new Date(),
+                message: "Ocorreu um erro inesperado. Tente novamente.",
+                data: {
+                  method: "registration",
+                  errorText: error,
+                  status: 500,
+                },
+              });
+              commit("SET_MESSAGE", "Ocorreu um erro inesperado. Tente novamente.");
             }
             reject(state.message);
           });
