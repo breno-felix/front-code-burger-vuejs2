@@ -3,7 +3,7 @@ const Login = () => import('@/views/Login/Login.vue');
 const authRoutes = [
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login
   }
 ];
