@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { login } from "@/services/api-code-burger";
+import { login } from "@/services/api-code-burger/auth";
 import Vue from "vue";
 
 export default {

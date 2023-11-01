@@ -1,4 +1,4 @@
-import { registration } from "@/services/api-code-burger";
+import { registration } from "@/services/api-code-burger/user";
 import Vue from "vue";
 
 export default {
