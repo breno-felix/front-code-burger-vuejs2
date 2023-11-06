@@ -28,7 +28,7 @@ export default {
     CLEAR_STATE(state) {
       state.isAuthenticated = false;
       state.userId = null;
-      localStorage.removeItem("token");
+      localStorage.clear();
     },
   },
   actions: {
@@ -37,9 +37,10 @@ export default {
         login({ email, password })
           .then((response) => {
             const token = response.data.accessToken;
-            localStorage.setItem("token", token);
-
             const { id } = jwt.decode(token);
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("userId", id);
 
             commit("SET_USER_ID", id);
             commit("SET_IS_AUTHENTICATED", true);
