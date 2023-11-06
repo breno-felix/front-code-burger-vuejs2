@@ -1,19 +1,28 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-import authRoutes from './auth';
-import userRoutes from './user';
+const requireAuth = (to, from, next) => {
+  to.name === "login" ||
+  to.name === "registration" ||
+  localStorage.getItem("token")
+    ? next()
+    : next({ name: "login" });
+};
 
-const routes = [
-  ...authRoutes,
-  ...userRoutes
-];
+import authRoutes from "./auth";
+import userRoutes from "./user";
+import appRoutes from "./app";
+
+const routes = [...authRoutes, ...userRoutes, ...appRoutes];
 
 const router = new VueRouter({
-  mode: 'history',
-  routes
+  mode: "history",
+  linkExactActiveClass: 'link-active',
+  routes,
 });
+
+router.beforeEach(requireAuth);
 
 export default router;
