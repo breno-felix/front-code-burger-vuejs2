@@ -10,8 +10,8 @@
                     </template>
 
                     <VueSlickCarousel v-bind="settings">
-                        <HomeCategoryCard v-for="(item, index) in this.items" :key="index" :src="item.urlPath"
-                            :buttonText="item.name" alt="item image"></HomeCategoryCard>
+                        <CategoryCard v-for="(item, index) in this.items" :key="index" :src="item.urlPath"
+                            :buttonText="item.name" alt="item image"></CategoryCard>
                     </VueSlickCarousel>
                 </b-skeleton-wrapper>
             </b-col>
@@ -23,10 +23,10 @@
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
-import HomeCategoryCard from './HomeCategoryCard.vue';
+import CategoryCard from './CategoryCard.vue';
 
 export default {
-    name: "HomeCategoryCarousel",
+    name: "CategoryCarousel",
     props: {
         items: {
             type: Array,
@@ -36,7 +36,7 @@ export default {
             default: true
         }
     },
-    components: { VueSlickCarousel, HomeCategoryCard },
+    components: { VueSlickCarousel, CategoryCard },
     data() {
         return {
             settings: {
