@@ -10,8 +10,8 @@
                     </template>
 
                     <VueSlickCarousel v-bind="settings">
-                        <HomeCard v-for="(category, index) in this.categories" :key="index" :src="category.urlPath"
-                            :buttonText="category.name" alt="category image"></HomeCard>
+                        <HomeCard v-for="(item, index) in this.items" :key="index" :src="item.urlPath"
+                            :buttonText="item.name" alt="item image"></HomeCard>
                     </VueSlickCarousel>
                 </b-skeleton-wrapper>
             </b-col>
@@ -28,7 +28,7 @@ import HomeCard from './HomeCard.vue';
 export default {
     name: "HomeCarousel",
     props: {
-        categories: {
+        items: {
             type: Array,
         },
         loading: {
@@ -40,7 +40,7 @@ export default {
     data() {
         return {
             settings: {
-                dots: true,
+                dots: false,
                 centerMode: true,
                 centerPadding: "20px",
                 focusOnSelect: true,
@@ -48,22 +48,37 @@ export default {
                 lazyLoad: 'ondemand',
                 responsive: [
                     {
-                        breakpoint: 992,
+                        breakpoint: 1150,
                         settings: {
                             slidesToShow: 3,
                         },
                     },
                     {
-                        breakpoint: 768,
+                        breakpoint: 890,
                         settings: {
                             slidesToShow: 2,
                         },
                     },
                     {
-                        breakpoint: 376,
+                        breakpoint: 600,
                         settings: {
                             slidesToShow: 2,
                             centerMode: false,
+                        },
+                    },
+                    {
+                        breakpoint: 560,
+                        settings: {
+                            slidesToShow: 1,
+                            centerPadding: "30px",
+                        },
+                    },
+                    {
+                        breakpoint: 360,
+                        settings: {
+                            slidesToShow: 1,
+                            centerMode: false,
+
                         },
                     },
                 ],
