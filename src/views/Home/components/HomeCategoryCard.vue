@@ -11,7 +11,7 @@
 import DefaultButton from '@/components/DefaultButton.vue'
 
 export default {
-    name: "HomeCard",
+    name: "HomeCategoryCard",
     props: {
         src: {
             type: String,
