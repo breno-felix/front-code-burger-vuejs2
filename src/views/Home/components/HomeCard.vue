@@ -36,7 +36,8 @@ export default {
 
 <style>
 .card-img {
-    max-width: 230px;
+    width: 230px;
+    height: 230px;
     border-radius: 10px;
 }
 
