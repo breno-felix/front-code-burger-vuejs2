@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .card-img {
     width: 230px;
     height: 230px;
