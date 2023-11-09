@@ -8,6 +8,13 @@ export default {
       return new Promise((resolve, reject) => {
         listProducts()
           .then((products) => {
+            const productsFormated = products.data
+              .map((product) => {
+                return {
+                  ...product,
+                  formatedPrice: formatCurrency(product.price),
+                };
+              });
             Vue.$log.info({
               timestamp: new Date(),
               message: "Lista de produtos carregada com sucesso!",
@@ -17,7 +24,7 @@ export default {
                 status: 200,
               },
             });
-            resolve(products.data);
+            resolve(productsFormated);
           })
           .catch((error) => {
             Vue.$log.error({
