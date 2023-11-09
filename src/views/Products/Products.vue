@@ -5,8 +5,8 @@
       alt="image products logo"></b-img>
 
     <b-nav align="center mb-5">
-      <b-nav-item v-for="(category, index) in this.categories" :key="index" @click="changeCategory(category.name)"
-        :active="(category.name === activeCategory)">{{
+      <b-nav-item v-for="(category, index) in this.categories" :key="index" @click="changeCategory(category._id)"
+        :active="(category._id === activeCategory)">{{
           category.name }}</b-nav-item>
     </b-nav>
 
@@ -38,7 +38,7 @@ export default {
     try {
       this.loading = true
       this.categories = await this.$store.dispatch('listCategories');
-      this.categories = [{ id: 0, name: 'Todos' }, ...this.categories]
+      this.categories = [{ _id: '0', name: 'Todos' }, ...this.categories]
       this.products = await this.$store.dispatch('listProducts');
       this.loading = false
     } catch (error) {
@@ -50,7 +50,7 @@ export default {
       loading: true,
       loadImg: true,
       categories: [],
-      activeCategory: 'Todos',
+      activeCategory: '0',
       products: []
     }
   },
@@ -58,8 +58,8 @@ export default {
     imageLoaded() {
       this.loadImg = false;
     },
-    changeCategory(categoryName) {
-      this.activeCategory = categoryName
+    changeCategory(categoryId) {
+      this.activeCategory = categoryId
     }
   },
 };
