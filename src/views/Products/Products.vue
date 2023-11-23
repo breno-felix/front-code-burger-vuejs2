@@ -12,7 +12,7 @@
 
   <b-container fluid="xl">
     <b-row cols="1" cols-md="2" cols-xl="3">
-      <b-col class="mb-3 col-card" v-for="(product, index) in this.products" :key="index" >
+      <b-col class="mb-3 col-card" v-for="(product, index) in this.productsByCategory" :key="index" >
         <ProductCard :src="product.urlPath" :buttonText="'Adicionar'"
           :nameText="product.name" :priceText="product.formatedPrice" :alt="'product image'" :pill="true"></ProductCard>
       </b-col>
@@ -34,24 +34,22 @@ export default {
   components: {
     ProductCard
   },
-  async mounted() {
+  mounted() {
     try {
-      this.loading = true
-      this.categories = await this.$store.dispatch('listCategories');
-      this.categories = [{ _id: '0', name: 'Todos' }, ...this.categories]
-      this.products = await this.$store.dispatch('listProducts');
-      this.loading = false
+      this.getCategories()
+      this.getProducts()
     } catch (error) {
       this.makeToast(error, 'Mensagem de Erro!', 'warning')
     }
   },
   data() {
     return {
-      loading: true,
+      loadProduct: true,
       loadImg: true,
       categories: [],
       activeCategory: '0',
-      products: []
+      products: [],
+      productsByCategory: []
     }
   },
   methods: {
@@ -60,6 +58,26 @@ export default {
     },
     changeCategory(categoryId) {
       this.activeCategory = categoryId
+      this.getProductsByCategory(categoryId)
+    },
+    async getProductsByCategory(categoryId) {
+      this.loadProduct = true;
+      if(categoryId !== '0'){
+        this.productsByCategory = this.products.filter(product => product.category_id === categoryId)
+      } else {
+        this.productsByCategory = this.products;
+      }
+      this.loadProduct = false;
+    },
+    async getProducts() {
+      this.loadProduct = true;
+      this.products = await this.$store.dispatch('listProducts');
+      this.productsByCategory = this.products;
+      this.loadProduct = false;
+    },
+    async getCategories() {
+      const allCategories = await this.$store.dispatch('listCategories');
+      this.categories = [{ _id: '0', name: 'Todos' }, ...allCategories]
     }
   },
 };
@@ -78,7 +96,7 @@ export default {
 
 .container-wrapper {
   background-color: #EFEFEF;
-  min-height: 100vh; 
+  min-height: 100%; 
   max-height: max-content;
 }
 
