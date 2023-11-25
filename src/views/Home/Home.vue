@@ -8,7 +8,7 @@
       <b-col class="p-0">
         <b-img class="my-5 category-img" :src="require('../../assets/CATEGORIAS.png')" center
           alt="category name image"></b-img>
-        <CategoryCarousel :items="categories" :loading="loading" @buttonClick="CategoryCarouselButtonClick"></CategoryCarousel>
+        <CategoryCarousel :items="categories" :loading="loading" @buttonClick="categoryCarouselButtonClick"></CategoryCarousel>
       </b-col>
     </b-row>
 
@@ -57,7 +57,7 @@ export default {
     imageLoaded() {
       this.loadImg = false;
     },
-    CategoryCarouselButtonClick(categoryId) {
+    categoryCarouselButtonClick(categoryId) {
       this.$router.push({ name: 'products', params: { categoryId } });
     }
   },
