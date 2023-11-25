@@ -34,10 +34,14 @@ export default {
   components: {
     ProductCard
   },
-  mounted() {
+  async mounted() {
+    const category_id = this.$route.params.categoryId
     try {
-      this.getCategories()
-      this.getProducts()
+      await this.getCategories()
+      await this.getProducts()
+      if (category_id) {
+        this.changeCategory(category_id)
+      }
     } catch (error) {
       this.makeToast(error, 'Mensagem de Erro!', 'warning')
     }
@@ -60,7 +64,7 @@ export default {
       this.activeCategory = categoryId
       this.getProductsByCategory(categoryId)
     },
-    async getProductsByCategory(categoryId) {
+    getProductsByCategory(categoryId) {
       this.loadProduct = true;
       if(categoryId !== '0'){
         this.productsByCategory = this.products.filter(product => product.category_id === categoryId)
