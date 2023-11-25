@@ -11,7 +11,7 @@
 
                     <VueSlickCarousel v-bind="settings">
                         <CategoryCard v-for="(item, index) in this.items" :key="index" :src="item.urlPath"
-                            :buttonText="item.name" alt="item image"></CategoryCard>
+                            :buttonText="item.name" alt="item image" @buttonClick="$emit('buttonClick', item._id)"></CategoryCard>
                     </VueSlickCarousel>
                 </b-skeleton-wrapper>
             </b-col>
