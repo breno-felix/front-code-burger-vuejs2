@@ -2,7 +2,7 @@
     <div>
         <b-card no-body border-variant="light" tag="button" style="max-width: 20rem;" class="p-0">
             <b-card-img class="mb-3 card-img" :src="src" alt="category image" bottom></b-card-img>
-            <DefaultButton :buttonText="buttonText" :pill="pill" :width="width"></DefaultButton>
+            <DefaultButton :buttonText="buttonText" :pill="pill" :width="width" @buttonClick="$emit('buttonClick')"></DefaultButton>
         </b-card>
     </div>
 </template>
