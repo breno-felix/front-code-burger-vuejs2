@@ -8,7 +8,7 @@ const appRoutes = [
     component: Home
   },
   {
-    path: '/products',
+    path: '/products/:categoryId?',
     name: 'products',
     component: Products
   }
