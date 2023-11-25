@@ -3,7 +3,7 @@
         <b-overlay :show="loading" :rounded="rounded" opacity="0.6" spinner-small spinner-variant="primary"
             class="d-inline-block width" @hidden="onHidden">
             <b-button ref="button" :disabled="loading" class="submit-button w-100" :pill="pill" type="submit"
-                :style="buttonStyle">
+                :style="buttonStyle" @click="$emit('buttonClick')">
                 {{ buttonText }}
             </b-button>
         </b-overlay>
