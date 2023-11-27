@@ -4,7 +4,8 @@
         <div class="card-right w-100">
             <p class="name-text">{{ nameText }}</p>
             <p class="price-text">{{ priceText }}</p>
-            <DefaultButton class="mt-2" :buttonText="buttonText" :pill="pill" :width="'100%'" :minWidth="'false'"></DefaultButton>
+            <DefaultButton class="mt-2" :buttonText="buttonText" :pill="pill" :width="'100%'" :minWidth="'false'"
+                @buttonClick="$emit('buttonClick')"></DefaultButton>
         </div>
     </b-card>
 </template>
