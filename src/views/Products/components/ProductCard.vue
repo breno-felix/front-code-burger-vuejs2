@@ -1,6 +1,7 @@
 <template>
     <b-card img-left no-body border-variant="light" tag="div">
-        <b-card-img class="card-img" :src="src" :alt="alt"></b-card-img>
+        <b-skeleton-img v-show="loading" card-img="left" no-aspect width="100%"></b-skeleton-img>
+        <b-card-img v-show="!loading" class="card-img" :src="src" :alt="alt"></b-card-img>
         <div class="card-right w-100">
             <p class="name-text">{{ nameText }}</p>
             <p class="price-text">{{ priceText }}</p>
@@ -34,6 +35,10 @@ export default {
         pill: {
             type: Boolean,
             default: false
+        },
+        loading: {
+            type: Boolean,
+            default: true
         },
     },
     components: {
