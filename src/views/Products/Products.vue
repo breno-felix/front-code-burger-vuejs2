@@ -14,7 +14,8 @@
       <b-row cols="1" cols-md="2" cols-xl="3">
         <b-col class="mb-3 col-card" v-for="(product, index) in this.productsByCategory" :key="index">
           <ProductCard :loading="loadProduct" :src="product.urlPath" :buttonText="'Adicionar'" :nameText="product.name"
-            :priceText="product.formatedPrice" :alt="'product image'" :pill="true" @buttonClick="productCardButtonClick(product)">
+            :priceText="product.formatedPrice" :alt="'product image'" :pill="true"
+            @buttonClick="productCardButtonClick(product)">
           </ProductCard>
         </b-col>
       </b-row>
@@ -36,6 +37,9 @@ export default {
     ProductCard
   },
   async mounted() {
+    if (this.$route.params.cartProducts === 'empty') {
+      this.makeToast('O carrinho esta vazio: adicione produto(s)', 'Aviso!', 'info')
+    }
     const category_id = this.$route.params.categoryId
     try {
       await this.getCategories()
