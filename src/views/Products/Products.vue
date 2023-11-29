@@ -13,7 +13,7 @@
     <b-container fluid="xl">
       <b-row cols="1" cols-md="2" cols-xl="3">
         <b-col class="mb-3 col-card" v-for="(product, index) in this.productsByCategory" :key="index">
-          <ProductCard :src="product.urlPath" :buttonText="'Adicionar'" :nameText="product.name"
+          <ProductCard :loading="loadProduct" :src="product.urlPath" :buttonText="'Adicionar'" :nameText="product.name"
             :priceText="product.formatedPrice" :alt="'product image'" :pill="true" @buttonClick="productCardButtonClick(product)">
           </ProductCard>
         </b-col>
@@ -66,13 +66,11 @@ export default {
       this.getProductsByCategory(categoryId)
     },
     getProductsByCategory(categoryId) {
-      this.loadProduct = true;
       if (categoryId !== '0') {
         this.productsByCategory = this.products.filter(product => product.category_id === categoryId)
       } else {
         this.productsByCategory = this.products;
       }
-      this.loadProduct = false;
     },
     async getProducts() {
       this.loadProduct = true;
