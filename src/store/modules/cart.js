@@ -17,16 +17,15 @@ export default {
   },
   actions: {
     putProductInCart({ commit, state }, product) {
-      const cartIndex = state.cartProducts.findIndex(
+      let newCartProducts = state.cartProducts;
+      const cartIndex = newCartProducts.findIndex(
         (cartProduct) => cartProduct._id === product._id
       );
-      let newCartProducts = [];
       if (cartIndex >= 0) {
-        newCartProducts = state.cartProducts;
         newCartProducts[cartIndex].quantity++;
       } else {
         product.quantity = 1;
-        newCartProducts = [...state.cartProducts, product];
+        newCartProducts.push(product);
       }
       commit("SET_CART_PRODUCTS", newCartProducts);
       Vue.$log.info({
@@ -40,5 +39,45 @@ export default {
         },
       });
     },
+
+    decreaseProductFromCart({ commit, state }, productId) {
+      let newCartProducts = state.cartProducts;
+      const cartIndex = newCartProducts.findIndex(
+        (cartProduct) => cartProduct._id === productId
+      );
+      if (newCartProducts[cartIndex].quantity > 1) {
+        newCartProducts[cartIndex].quantity--;
+        commit("SET_CART_PRODUCTS", newCartProducts);
+        Vue.$log.info({
+          timestamp: new Date(),
+          message: "Produto decrescido do carrinho.",
+          data: {
+            method: "decreaseProductFromCart",
+            userId: localStorage.getItem("userId"),
+            productId: productId,
+            status: 200,
+          },
+        });
+      }
+    },
+
+    removeProductFromCart({ commit, state }, productId) {
+      let newCartProducts = state.cartProducts;
+      const cartIndex = newCartProducts.findIndex(
+        (cartProduct) => cartProduct._id === productId
+      );
+      newCartProducts.splice(cartIndex, 1);
+      commit("SET_CART_PRODUCTS", newCartProducts);
+      Vue.$log.info({
+        timestamp: new Date(),
+        message: "Produto removido do carrinho.",
+        data: {
+          method: "removeProductFromCart",
+          userId: localStorage.getItem("userId"),
+          productId: productId,
+          status: 200,
+        },
+      });
+    }
   },
 };
