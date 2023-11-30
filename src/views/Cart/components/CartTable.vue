@@ -1,5 +1,5 @@
 <template>
-    <b-table :fields="fields" :items="cartProducts" borderless>
+    <b-table :fields="fields" :items="cartProducts" borderless class="m-0">
         <template #cell(urlPath)="data">
             <b-img :src="data.value" alt="product image"></b-img>
         </template>
