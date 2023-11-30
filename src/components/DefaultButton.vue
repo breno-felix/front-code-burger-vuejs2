@@ -48,6 +48,7 @@ export default {
                 backgroundColor: this.backgroundColor,
                 minWidth: this.minWidth,
                 border: 'none',
+                color: 'white',
             };
         }
     },
