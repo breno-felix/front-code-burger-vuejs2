@@ -20,7 +20,7 @@ export default {
               message: "Usuário cadastrado com sucesso!",
               data: {
                 method: "registration",
-                status: 200,
+                status: 201,
               },
             });
             commit("SET_MESSAGE", "Usuário cadastrado com sucesso!");
@@ -33,18 +33,6 @@ export default {
 
               switch (errorCode) {
                 case 400:
-                  Vue.$log.error({
-                    timestamp: new Date(),
-                    message: "As credenciais inseridas estão incorretas.",
-                    data: {
-                      method: "registration",
-                      errorText: errorText,
-                      status: errorCode,
-                    },
-                  });
-                  commit("SET_MESSAGE", "As credenciais inseridas estão incorretas.");
-                  break;
-                case 401:
                   Vue.$log.error({
                     timestamp: new Date(),
                     message: "As credenciais inseridas estão incorretas.",
