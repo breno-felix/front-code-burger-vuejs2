@@ -116,7 +116,7 @@ export default {
                 timestamp: new Date(),
                 message: "Ocorreu um erro inesperado. Tente novamente.",
                 data: {
-                  method: "registration",
+                  method: "login",
                   errorText: error,
                   status: 500,
                 },
