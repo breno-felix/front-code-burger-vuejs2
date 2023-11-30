@@ -3,7 +3,8 @@ const Products = () => import('@/views/Products/Products.vue');
 const Cart = () => import('@/views/Cart/Cart.vue');
 
 const requireNonEmptyCart = (to, from, next) => {
-  localStorage.getItem("cartProducts")
+  const cartProducts = localStorage.getItem("cartProducts");
+  cartProducts && cartProducts.length > 0
     ? next()
     : next({ name: "products", params: { cartProducts: 'empty' } });
 };
