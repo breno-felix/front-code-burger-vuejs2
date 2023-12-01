@@ -88,6 +88,7 @@ export default {
     },
     productCardButtonClick(product) {
       this.$store.dispatch('putProductInCart', product);
+      this.makeToast('O produto foi adicionado ao carrinho', 'Tudo certo!', 'success');
     }
   },
 };
