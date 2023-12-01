@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { newOrder } from "@/services/api-code-burger/order";
 
 export default {
   state: {
@@ -13,6 +14,9 @@ export default {
     SET_CART_PRODUCTS(state, cartProducts) {
       state.cartProducts = cartProducts;
       localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+    },
+    CLEAR_CART_PRODUCTS() {
+      localStorage.removeItem("cartProducts");
     },
   },
   actions: {
@@ -77,6 +81,103 @@ export default {
           productId: productId,
           status: 200,
         },
+      });
+    },
+
+    clearCart({ commit }) {
+      commit("CLEAR_CART_PRODUCTS");
+      Vue.$log.info({
+        timestamp: new Date(),
+        message: "Carrinho limpo.",
+        data: {
+          method: "clearCart",
+          userId: localStorage.getItem("userId"),
+          status: 200,
+        },
+      });
+    },
+
+    submitOrder({ state }) {
+      const order = {
+        products : state.cartProducts.map((product) => {
+          return {
+            product_id: product._id,
+            quantity: product.quantity
+          }
+        })
+      }
+
+      return new Promise((resolve, reject) => {
+        newOrder(order)
+          .then(() => {
+            Vue.$log.info({
+              timestamp: new Date(),
+              message: "Pedido enviado com sucesso.",
+              data: {
+                method: "submitOrder",
+                userId: localStorage.getItem("userId"),
+                order,
+                status: 201,
+              },
+            });
+            resolve("Pedido enviado com sucesso.");
+          })
+          .catch((error) => {
+            if (error.response) {
+              const errorCode = error.response.status;
+              const errorText = error.response.data.error;
+
+              switch (errorCode) {
+                case 400:
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Algum parâmetro é inválido.",
+                    data: {
+                      method: "submitOrder",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
+                  reject("Algum parâmetro é inválido.");
+                  break;
+                case 500:
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Ocorreu um erro no servidor.",
+                    data: {
+                      method: "submitOrder",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
+                  reject("Ocorreu um erro no servidor.");
+                  break;
+                default:
+                  Vue.$log.error({
+                    timestamp: new Date(),
+                    message: "Ocorreu um erro inesperado. Tente novamente.",
+                    data: {
+                      method: "submitOrder",
+                      errorText: errorText,
+                      status: errorCode,
+                    },
+                  });
+                  reject("Ocorreu um erro inesperado. Tente novamente.");
+                  break;
+              }
+            } else {
+              Vue.$log.error({
+                timestamp: new Date(),
+                message: "Ocorreu um erro inesperado. Tente novamente.",
+                data: {
+                  method: "submitOrder",
+                  errorText: error,
+                  status: 500,
+                },
+              });
+              reject("Ocorreu um erro inesperado. Tente novamente.");
+            }
+          });
       });
     }
   },
