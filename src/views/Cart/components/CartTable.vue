@@ -9,7 +9,7 @@
         </template>
 
         <template #cell(quantity)="data">
-            <b-button size="sm" class="mr-1" @click="minusButtonClick(data.item._id)">
+            <b-button size="sm" class="mr-1" @click="minusButtonClick(data.item)">
                 -
             </b-button>
             {{ data.value }}
@@ -68,8 +68,12 @@ export default {
         plusButtonClick(product) {
             this.$store.dispatch('putProductInCart', product);
         },
-        minusButtonClick(productId) {
-            this.$store.dispatch('decreaseProductFromCart', productId);
+        minusButtonClick(product) {
+            if (product.quantity === 1) {
+                this.$emit('showRemoveProductModal', { productToRemove: product, quantityProductCart: this.cartProducts.length });
+            } else {
+                this.$store.dispatch('decreaseProductFromCart', product._id);
+            }
         }
     }
 }
