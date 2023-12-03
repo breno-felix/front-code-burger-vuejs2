@@ -16,31 +16,8 @@
       </b-row>
     </b-container>
 
-    <b-modal v-model="modalShow" title="Deletar produto" ok-only>
-      <b-container>
-        <b-row>
-          <p> Você tem certeza que deseja deletar este produto? </p>
-        </b-row>
-        <b-row>
-          <b-col cols="5" class="pr-0">
-            <b-card-img class="modal-img" :src="productToRemove.urlPath" :alt="'modal image'"></b-card-img>
-          </b-col>
-          <b-col class="pl-0">
-            <p><b>{{ productToRemove.name }}</b></p>
-            <p>{{ formatCurrency(productToRemove.price) }}</p>
-          </b-col>
-        </b-row>
-
-      </b-container>
-      <template #modal-footer="{ cancel }">
-        <b-button size="sm" variant="success" @click="removeProductFromCart(productToRemove._id)">
-          Sim
-        </b-button>
-        <b-button size="sm" variant="danger" @click="cancel()">
-          Não
-        </b-button>
-      </template>
-    </b-modal>
+    <ModalOfRemoveProductFromCart :modalShow="modalShow" :productToRemove="productToRemove"
+      :quantityProductCart="quantityProductCart" @changeModalShow="modalShow = $event"></ModalOfRemoveProductFromCart>
   </b-container>
 </template>
 
@@ -48,6 +25,7 @@
 import CartTable from './components/CartTable.vue'
 import CartResume from './components/CartResume.vue'
 import DefaultButton from '@/components/DefaultButton.vue'
+import ModalOfRemoveProductFromCart from './components/ModalOfRemoveProductFromCart.vue'
 import ToastMixin from '@/mixins/toastMixin.js';
 import formatCurrency from "@/utils/formatCurrency";
 
@@ -57,7 +35,8 @@ export default {
   components: {
     CartTable,
     CartResume,
-    DefaultButton
+    DefaultButton,
+    ModalOfRemoveProductFromCart
   },
   data() {
     return {
@@ -92,14 +71,6 @@ export default {
       this.quantityProductCart = quantityProductCart
       this.modalShow = true;
     },
-    removeProductFromCart(productId) {
-      this.$store.dispatch('removeProductFromCart', productId);
-      this.makeToast('Produto removido com sucesso', 'Tudo certo!', 'success');
-      this.modalShow = false;
-      if (this.quantityProductCart === 1) {
-        this.$router.push({ name: 'products', params: { cartProducts: 'empty' } });
-      }
-    },
     formatCurrency(value) {
       return formatCurrency(value);
     },
@@ -112,11 +83,5 @@ export default {
   background-color: #EFEFEF;
   min-height: 100%;
   max-height: max-content;
-}
-
-.modal-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
 }
 </style>
