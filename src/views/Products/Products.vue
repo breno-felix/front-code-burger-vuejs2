@@ -94,7 +94,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 .nav-link {
   color: #9A9A9D;
   font-size: 17px;
