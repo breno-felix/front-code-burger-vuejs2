@@ -1,12 +1,23 @@
 <template>
   <div id="app">
-    <router-view/>
+    <Header v-if="showHeader()"></Header>
+    <router-view />
   </div>
 </template>
 
 <script>
+import Header from "@/components/Header";
+
 export default {
   name: "App",
+  components: {
+    Header,
+  },
+  methods: {
+    showHeader() {
+      return this.$route.path !== '/login' && this.$route.path !== '/registration';
+    }
+  }
 };
 </script>
 
@@ -16,12 +27,13 @@ export default {
   font-family: 'Roboto', sans-serif;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   min-height: 104vh;
 }
 
-#app{
+#app {
   height: 100%;
 }
 </style>
