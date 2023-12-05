@@ -4,7 +4,8 @@
             <b-card-img class="mb-2 card-img" :src="src" :alt="alt" bottom></b-card-img>
             <p>{{ nameText }}</p>
             <p>{{ priceText }}</p>
-            <DefaultButton class="mt-2" :buttonText="buttonText" :pill="pill" :width="width"></DefaultButton>
+            <DefaultButton class="mt-2" :buttonText="buttonText" :pill="pill" :width="width"
+                @buttonClick="$emit('buttonClick')"></DefaultButton>
         </b-card>
     </div>
 </template>
