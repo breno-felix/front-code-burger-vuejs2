@@ -11,7 +11,8 @@
 
                     <VueSlickCarousel v-bind="settings">
                         <OfferCard v-for="(item, index) in this.items" :key="index" :src="item.urlPath"
-                            :buttonText="'Peça Agora'" :nameText="item.name" :priceText="item.formatedPrice" :alt="'item image'"></OfferCard>
+                            :buttonText="'Peça Agora'" :nameText="item.name" :priceText="item.formatedPrice"
+                            :alt="'item image'" @buttonClick="$emit('buttonClick', item)"></OfferCard>
                     </VueSlickCarousel>
                 </b-skeleton-wrapper>
             </b-col>
