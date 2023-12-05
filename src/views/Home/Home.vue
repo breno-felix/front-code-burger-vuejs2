@@ -8,15 +8,16 @@
       <b-col class="p-0">
         <b-img class="my-5 category-img" :src="require('../../assets/CATEGORIAS.png')" center
           alt="category name image"></b-img>
-        <CategoryCarousel :items="categories" :loading="loading" @buttonClick="categoryCarouselButtonClick"></CategoryCarousel>
+        <CategoryCarousel :items="categories" :loading="loading" @buttonClick="categoryCarouselButtonClick">
+        </CategoryCarousel>
       </b-col>
     </b-row>
 
     <b-row class="container-product pb-5">
       <b-col class="p-0">
-        <b-img class="my-5 offer-img" :src="require('../../assets/OFERTAS.png')" center
-          alt="offer name image"></b-img>
-        <OfferCarousel :items="productsOffer" :loading="loading"></OfferCarousel>
+        <b-img class="my-5 offer-img" :src="require('../../assets/OFERTAS.png')" center alt="offer name image"></b-img>
+        <OfferCarousel :items="productsOffer" :loading="loading" @buttonClick="offerCarouselButtonClick">
+        </OfferCarousel>
       </b-col>
     </b-row>
   </b-container>
@@ -59,6 +60,10 @@ export default {
     },
     categoryCarouselButtonClick(categoryId) {
       this.$router.push({ name: 'products', params: { categoryId } });
+    },
+    offerCarouselButtonClick(product) {
+      this.$store.dispatch('putProductInCart', product);
+      this.makeToast('O produto foi adicionado ao carrinho', 'Tudo certo!', 'success');
     }
   },
 };
