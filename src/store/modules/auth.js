@@ -28,7 +28,8 @@ export default {
     CLEAR_STATE(state) {
       state.isAuthenticated = false;
       state.userId = null;
-      localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
     },
   },
   actions: {
@@ -132,7 +133,7 @@ export default {
         message: "Usuário deslogado.",
         data: {
           method: "logout",
-          userId: commit.state.userId,
+          userId: localStorage.getItem("userId"),
           status: 200,
         },
       });
