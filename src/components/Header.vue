@@ -34,8 +34,8 @@
           <b-img :src="require('../assets/person.svg')" alt="person image"></b-img>
         </b-nav-item>
         <div class="ml-2">
-          <p class="m-0 name">Olá, Breno</p>
-          <a href="#" class="logout-button" @click="logout" >Sair</a>
+          <p class="m-0 name">Olá, {{ userName }}</p>
+          <a href="#" class="logout-button" @click="logout">Sair</a>
         </div>
       </b-navbar-nav>
     </b-collapse>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   name: "Header",
@@ -51,7 +52,12 @@ export default {
       this.$store.dispatch('logout');
       this.$router.go();
     }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      userName: 'getUserName',
+    }),
+  },
 };
 </script>
 
