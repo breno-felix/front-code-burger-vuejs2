@@ -4,32 +4,38 @@ import Vue from "vue";
 
 export default {
   state: {
-    isAuthenticated: false,
-    userId: null,
+    token: localStorage.getItem("token") || null,
+    userId: localStorage.getItem("userId") || null,
+    userName: localStorage.getItem("userName") || null,
   },
   getters: {
-    getIsAuthenticated(state) {
-      return state.isAuthenticated;
+    getToken(state) {
+      return state.token;
     },
     getUserId(state) {
       return state.userId;
     },
-    getToken() {
-      return localStorage.getItem("token");
+    getUserName(state) {
+      return state.userName;
     },
   },
   mutations: {
-    SET_IS_AUTHENTICATED(state, isAuthenticated) {
-      state.isAuthenticated = isAuthenticated;
+    SET_TOKEN(state, token) {
+      state.token = token;
+      localStorage.setItem("token", token);
     },
     SET_USER_ID(state, userId) {
       state.userId = userId;
+      localStorage.setItem("userId", userId);
     },
-    CLEAR_STATE(state) {
-      state.isAuthenticated = false;
-      state.userId = null;
+    SET_USER_NAME(state, userName) {
+      state.userName = userName;
+      localStorage.setItem("userName", userName);
+    },
+    CLEAR_STATE() {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
     },
   },
   actions: {
@@ -38,13 +44,11 @@ export default {
         login({ email, password })
           .then((response) => {
             const token = response.data.accessToken;
-            const { id } = jwt.decode(token);
+            const { id, name } = jwt.decode(token);
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("userId", id);
-
+            commit("SET_TOKEN", token);
             commit("SET_USER_ID", id);
-            commit("SET_IS_AUTHENTICATED", true);
+            commit("SET_USER_NAME", name);
             Vue.$log.info({
               timestamp: new Date(),
               message: "Usuário logado.",
